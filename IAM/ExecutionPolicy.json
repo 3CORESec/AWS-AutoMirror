@@ -1,0 +1,17 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AutoMirrorExecutorPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeInstances",
+                "ec2:describeTrafficMirrorTargets",
+                "ec2:describeTrafficMirrorFilters",
+                "ec2:createTrafficMirrorSession",
+                "ec2:describeTrafficMirrorSessions"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

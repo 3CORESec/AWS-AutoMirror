@@ -25,7 +25,7 @@ If an instance was created and during instance creation the appropriate Tag wasn
 We've kept the configuration required to use AutoMirror as simple as possible. The following are pre-requisites:
 
 - Create an [Execution Policy](./IAM/ExecutionPolicy.json) for the Lambda with a minimal set of permissions
-- Deploy the [Lambda function](./Code/index.js) in a Node 10 environemnt with a >= 10 second timeout *(useful for when doing 20+ instance deployments)*
+- Deploy the [Lambda function](./Code/index.js) in a Node 10 environemnt with a >= 10 second timeout
 - Create a Cloudwatch Event Rule to trigger the Lambda function, using the following [event code](./Cloudwatch/AutoMirrorCloudwatch.json) and [image](./Imgs/cloudwatch-rule.png) for instructions
 
 ## How do I run it?
@@ -36,7 +36,9 @@ After the installation steps are completed, just tag any instance with **Mirror=
 
 ## Assumptions
 
-We assume the user already created a Session Mirror Target and a Mirror Filter. On accounts with only one of each, AutoMirror will do everything for you. In environments with several Targets and Filters, please read the **Controlling AutoMirror** section. 
+We assume the user already created a Session Mirror Target and a Mirror Filter. On accounts with only one of each, AutoMirror will do everything for you. In environments with several Mirror Targets and Mirror Filters, please read the **Controlling AutoMirror** section. 
+
+It is also important to mention that the Lambda function needs enough time to create all the sessions before it times out. We recommended changing the default timeout from 3 seconds to 10, as that will accomodate most deployments. In scenarios where you might be creating 20/30+ sessions at once, please adjust the timeout accordindly.
 
 ## Controlling AutoMirror
 
@@ -52,7 +54,7 @@ Through the usage of these tags you can control AutoMirror during the deployment
 - mirrorTarget=tmt-0cf51cb49550a6000
 - mirrorFilter=tmf-037045da20bff1511
 
-**Tags are case-sensitive**. 
+**Tags are case-sensitive**.  
 
 # Feedback
 Found this interesting? Have a question/comment/request? Let us know! 

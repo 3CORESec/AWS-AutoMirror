@@ -25,7 +25,7 @@ If an instance was created and during instance creation the appropriate Tag wasn
 We've kept the configuration required to use AutoMirror as simple as possible. The following are pre-requisites:
 
 - Create an [Execution Policy](./IAM/ExecutionPolicy.json) for the Lambda with a minimal set of permissions
-- Deploy the [Lambda function](./Code/index.js) in a Node 10 environemnt
+- Deploy the [Lambda function](./Code/index.js) in a Node 10 environemnt with a >= 10 second timeout *(useful for when doing 20+ instance deployments)*
 - Create a Cloudwatch Event Rule to trigger the Lambda function, using the following [event code](./Cloudwatch/AutoMirrorCloudwatch.json) and [image](./Imgs/cloudwatch-rule.png) for instructions
 - *(Optional)* - If you're using our [AWS Config Mirror Session rule](https://github.com/3CORESec/aws-config-mirrorsession), you can configure the remediation action following this image
 

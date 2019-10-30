@@ -61,7 +61,7 @@ Found this interesting? Have a question/comment/request? Let us know!
 
 Feel free to open an [issue](https://github.com/3CORESec/aws-automirror/issues) or ping us on [Twitter](https://twitter.com/3CORESec).
 
-# Improvements currently being worked on
+# In the development pipeline ...
 
 * Name created sessions with the instanceId of the source
 * Add additional logic to the session number; Boundaries for creation \[1-3\]

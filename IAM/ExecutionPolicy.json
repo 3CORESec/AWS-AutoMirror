@@ -2,7 +2,14 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "AutoMirrorExecutorPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "logs:*"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Sid": "AutoMirrorExecutionPolicy",
             "Effect": "Allow",
             "Action": [
                 "ec2:DescribeInstances",

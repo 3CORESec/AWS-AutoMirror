@@ -6,8 +6,8 @@ exports.handler = function (event, context, callback) {
     var params = {
         Filters: [
             {
-                Name: "tag:Mirror",
-                Values: ["True"]
+                Name: "tag:mirror",
+                Values: ["true"]
             }
         ]
     };
@@ -44,6 +44,7 @@ exports.handler = function (event, context, callback) {
                                     var tasks = [];
                                     var mirrTargets = [];
                                     var netIds = [];
+                                    var instIds = [];
                                     var mirrFilters = [];
                                     var masterMirrTarget = null;
                                     var masterMirrFilter = null;
@@ -68,7 +69,7 @@ exports.handler = function (event, context, callback) {
                                                         mirrFilters.push(inst.Tags[inst.Tags.map(x => x.Key).indexOf('mirrorFilter')].Value);
                                                     else
                                                         mirrFilters.push(masterMirrFilter);
-
+                                                    instIds.push(inst.InstanceId);
                                                     netIds.push(inst.NetworkInterfaces[0].NetworkInterfaceId);
                                                 }
                                             })
@@ -89,7 +90,18 @@ exports.handler = function (event, context, callback) {
                                                         SessionNumber: sessionNumber,
                                                         TrafficMirrorFilterId: mirrFilters[index],
                                                         TrafficMirrorTargetId: mirrTargets[index],
-                                                        Description: "Created by AutoMirror"
+                                                        Description: "created by automirror",
+                                                        TagSpecifications: [
+                                                        {
+                                                          ResourceType: "traffic-mirror-session",
+                                                          Tags: [
+                                                            {
+                                                              Key: 'Name',
+                                                              Value: `AUTOMIRROR > Instance: ${instIds[index]} (Session :${sessionNumber})`
+                                                            }
+                                                          ]
+                                                        }
+                                                      ],
                                                     }
 
                                                     takenSessionNumbers.push(sessionNumber);
@@ -100,6 +112,7 @@ exports.handler = function (event, context, callback) {
                                                             reject();
                                                         }
                                                         else {
+                                                            console.log(JSON.stringify(_data), null, 2);
                                                             resolve();
                                                         }
                                                     });

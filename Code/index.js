@@ -6,8 +6,8 @@ exports.handler = function (event, context, callback) {
     var params = {
         Filters: [
             {
-                Name: "tag:mirror",
-                Values: ["true"]
+                Name: "tag:Mirror",
+                Values: ["True"]
             }
         ]
     };
@@ -90,7 +90,7 @@ exports.handler = function (event, context, callback) {
                                                         SessionNumber: sessionNumber,
                                                         TrafficMirrorFilterId: mirrFilters[index],
                                                         TrafficMirrorTargetId: mirrTargets[index],
-                                                        Description: "created by automirror",
+                                                        Description: "Created by AutoMirror"
                                                         TagSpecifications: [
                                                         {
                                                           ResourceType: "traffic-mirror-session",

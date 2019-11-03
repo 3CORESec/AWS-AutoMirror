@@ -90,7 +90,7 @@ exports.handler = function (event, context, callback) {
                                                         SessionNumber: sessionNumber,
                                                         TrafficMirrorFilterId: mirrFilters[index],
                                                         TrafficMirrorTargetId: mirrTargets[index],
-                                                        Description: "Created by AutoMirror"
+                                                        Description: "Created by AutoMirror",
                                                         TagSpecifications: [
                                                         {
                                                           ResourceType: "traffic-mirror-session",

@@ -16,7 +16,8 @@
                 "ec2:describeTrafficMirrorTargets",
                 "ec2:describeTrafficMirrorFilters",
                 "ec2:createTrafficMirrorSession",
-                "ec2:describeTrafficMirrorSessions"
+                "ec2:describeTrafficMirrorSessions",
+                "ec2:CreateTags"
             ],
             "Resource": "*"
         }

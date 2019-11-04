@@ -97,7 +97,7 @@ exports.handler = function (event, context, callback) {
                                                           Tags: [
                                                             {
                                                               Key: 'Name',
-                                                              Value: `AUTOMIRROR > Instance: ${instIds[index]} (Session :${sessionNumber})`
+                                                              Value: `Mirror for ${instIds[index]}`
                                                             }
                                                           ]
                                                         }

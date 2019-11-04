@@ -63,10 +63,8 @@ Feel free to open an [issue](https://github.com/3CORESec/aws-automirror/issues) 
 
 # In the development pipeline ...
 
-* Name created sessions with the instanceId of the source
-* Add additional logic to the session number; Boundaries for creation \[1-3\]
 * Better output of success & failures to CloudWatch
 
 # ToDo
 
-* Additional error handling, namely: Instance Type, Session Number boundaries
+* Additional error handling, namely: Instance Type *(nitro only)*, Session Number boundaries *(warn if more than 3 sessions exist)*

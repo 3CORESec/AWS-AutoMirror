@@ -97,7 +97,7 @@ exports.handler = function (event, context, callback) {
                                                           Tags: [
                                                             {
                                                               Key: 'Name',
-                                                              Value: `Mirror for ${instIds[index]}`
+                                                              Value: `${instIds[index]}`
                                                             }
                                                           ]
                                                         }

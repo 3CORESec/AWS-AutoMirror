@@ -47,7 +47,7 @@ If you want to configure which **Mirror Target** and **Mirror Filter** AutoMirro
 - mirrorTarget
 - mirrorFilter
 
-Through the usage of these tags you can control AutoMirror during the deployment or remediation of your Mirror Sessions. 
+Through the usage of these tags you can have a more advanced control of AutoMirror. 
 
 **Example tags on EC2 creation:**
 

@@ -4,6 +4,10 @@
 
 Part of the [AWS Mirror Toolkit](https://github.com/3CORESec/aws-mirror-toolkit), AutoMirror is a project that automatically creates AWS traffic mirror sessions. It allows configuration via AWS Tags and helps you manage big deployments of traffic mirror sessions. 
 
+## Version
+
+![image](https://img.shields.io/badge/AutoMirror-0.1-GREEN)
+
 ## How does it work?
 
 3CS AWS AutoMirror is a AWS Lambda function that has three modes of operation:

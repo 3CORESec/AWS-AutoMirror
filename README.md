@@ -63,10 +63,6 @@ Found this interesting? Have a question/comment/request? Let us know!
 
 Feel free to open an [issue](https://github.com/3CORESec/aws-automirror/issues) or ping us on [Twitter](https://twitter.com/3CORESec).
 
-# In the development pipeline ...
-
-* Better output of success & failures to CloudWatch
-
 # ToDo
 
-* Additional error handling, namely: Instance Type *(nitro only)*, Session Number boundaries *(warn if more than 3 sessions exist)*
+Check the [issues](https://github.com/3CORESec/aws-automirror/issues) to know what we're working on. 

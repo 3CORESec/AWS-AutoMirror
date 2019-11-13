@@ -49,7 +49,7 @@ If you want to configure which **Mirror Target** and **Mirror Filter** AutoMirro
 - mirrorTarget
 - mirrorFilter
 
-Through the usage of these tags you can have a more advanced control of AutoMirror. 
+Through the usage of these tags you can have a more advanced control of AutoMirror. [Example Image](./Imgs/advanced-tags.png).
 
 **Example tags on EC2 creation:**
 

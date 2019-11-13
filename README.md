@@ -29,6 +29,7 @@ We've kept the configuration required to use AutoMirror as simple as possible. T
 - Create an [Execution Policy](./IAM/ExecutionPolicy.json) for the Lambda with a minimal set of permissions
 - Deploy the [Lambda function](./Code/index.js) in a Node 10 environemnt with a >= 10 second timeout
 - Create a Cloudwatch Event Rule to trigger the Lambda function, using the following [event code](./Cloudwatch/AutoMirrorCloudwatch.json) and [image](./Imgs/cloudwatch-rule.png) for instructions
+  - If you'd like for AutoMirror to run on schedule, change the Even Source [accordingly](./Imgs/cloudwatch-cron.png) 
 
 ## How do I run it?
 

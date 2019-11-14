@@ -58,7 +58,7 @@ If you want to configure which **Mirror Target** and **Mirror Filter** AutoMirro
 - Mirror-Target=tmt-0cf51cb49550a6000
 - Mirror-Filter=tmf-037045da20bff1511
 
-Through the usage of these tags you can have a more advanced control of AutoMirror. Check this [Image](./Imgs/advanced-tags.png) for an example of the tags in use.
+Through the usage of these tags you can have a more advanced control of AutoMirror. Check this [image](./Imgs/advanced-tags.png) for an example of the tags in use.
 
 # Feedback
 Found this interesting? Have a question/comment/request? Let us know! 

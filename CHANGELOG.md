@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Total number of sessions are now counted and reported on log structure - [Closes #2](https://github.com/3CORESec/AWS-AutoMirror/issues/2)
 ### Changed
 - AWS Lambda Concurrency changed to 1 - [Closes #6](https://github.com/3CORESec/AWS-AutoMirror/issues/6)
-- IAM policy was changed to allow the creation of Tags, which are used to name the mirror sessions
 
 ## [0.2] - 2019-11-04
 ### Added

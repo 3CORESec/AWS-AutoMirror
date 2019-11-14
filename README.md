@@ -4,7 +4,7 @@
 
 Part of the [AWS Mirror Toolkit](https://github.com/3CORESec/aws-mirror-toolkit), AutoMirror is a project that automatically creates AWS traffic mirror sessions. It allows configuration via AWS Tags and helps you manage big deployments of traffic mirror sessions. 
 
-![image](https://img.shields.io/badge/AutoMirror-0.1-GREEN)
+![image](https://img.shields.io/badge/AutoMirror-0.2-GREEN)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 ## How does it work?

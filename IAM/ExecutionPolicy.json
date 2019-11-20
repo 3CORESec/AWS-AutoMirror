@@ -2,24 +2,23 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Effect": "Allow",
-            "Action": [
-                "logs:*"
-            ],
-            "Resource": "arn:aws:logs:*:*:*"
-        },
-        {
-            "Sid": "AutoMirrorExecutionPolicy",
+            "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": [
                 "ec2:DescribeInstances",
-                "ec2:describeTrafficMirrorTargets",
-                "ec2:describeTrafficMirrorFilters",
-                "ec2:createTrafficMirrorSession",
-                "ec2:describeTrafficMirrorSessions",
-                "ec2:CreateTags"
+                "ec2:DescribeTrafficMirrorFilters",
+                "ec2:DescribeTrafficMirrorTargets",
+                "ec2:CreateTags",
+                "ec2:CreateTrafficMirrorSession",
+                "ec2:DescribeTrafficMirrorSessions"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "logs:*",
+            "Resource": "arn:aws:logs:*:*:*"
         }
     ]
 }

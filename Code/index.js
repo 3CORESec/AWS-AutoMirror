@@ -1,7 +1,7 @@
 var aws = require('aws-sdk');
 var ec2 = new aws.EC2();
 
-exports.handler = async function(event) {
+exports.handler = async function (event) {
 
   var params = {
     Filters: [{
@@ -21,10 +21,10 @@ exports.handler = async function(event) {
     .then(sessionInfo => ec2.describeInstances(params).promise()
       .then(data => ec2.describeInstances(altParams).promise()
         .then(altData => ec2.describeTrafficMirrorTargets().promise()
-          .then(mirrTargetData => ec2.describeTrafficMirrorFilters().promise()
+          .then(mirrTargetData => generateMirrorFilter()
             .then(mirrFilterData => {
+
               var _sessionInfo = sessionInfo.TrafficMirrorSessions;
-              data.Reservations = data.Reservations.concat(altData.Reservations);
               var sessionCount = _sessionInfo.length;
               var tasks = [];
               var netIds = [];
@@ -34,6 +34,9 @@ exports.handler = async function(event) {
               var usedSessionInfo = null;
               var masterMirrTarget = null;
               var masterMirrFilter = null;
+
+              data.Reservations = data.Reservations.concat(altData.Reservations);
+
               try {
                 usedSessionInfo = _sessionInfo
                   .map(sess => {
@@ -50,11 +53,11 @@ exports.handler = async function(event) {
 
               if (mirrTargetData.TrafficMirrorTargets && mirrTargetData.TrafficMirrorTargets.length > 0)
                 masterMirrTarget = mirrTargetData
-                .TrafficMirrorTargets[mirrTargetData.TrafficMirrorTargets.length - 1].TrafficMirrorTargetId;
+                  .TrafficMirrorTargets[mirrTargetData.TrafficMirrorTargets.length - 1].TrafficMirrorTargetId;
 
               if (mirrFilterData.TrafficMirrorFilters && mirrFilterData.TrafficMirrorFilters.length > 0)
                 masterMirrFilter = mirrFilterData
-                .TrafficMirrorFilters[mirrFilterData.TrafficMirrorFilters.length - 1].TrafficMirrorFilterId;
+                  .TrafficMirrorFilters[mirrFilterData.TrafficMirrorFilters.length - 1].TrafficMirrorFilterId;
 
               data
                 .Reservations.forEach(res =>
@@ -70,8 +73,8 @@ exports.handler = async function(event) {
 
                     if (inst.Tags.map(x => x.Key.toLowerCase()).includes('mirror-filter'))
                       filter = inst
-                      .Tags[inst.Tags.map(x => x.Key.toLowerCase()).indexOf('mirror-filter')]
-                      .Value;
+                        .Tags[inst.Tags.map(x => x.Key.toLowerCase()).indexOf('mirror-filter')]
+                        .Value;
 
                     if (inst.NetworkInterfaces != null &&
                       inst.NetworkInterfaces.length > 0 &&
@@ -91,7 +94,7 @@ exports.handler = async function(event) {
               netIds.forEach((netId, index) => {
                 if (mirrFilters[index] != null && mirrTargets[index] != null)
                   tasks.push(new Promise(
-                    function(resolve, reject) {
+                    function (resolve, reject) {
                       var sessionNumber = calculateSessionNumber(usedSessionInfo, netId);
                       if (sessionNumber == null)
                         reject(`Interface ${netId} already has 3 sessions`);
@@ -115,7 +118,7 @@ exports.handler = async function(event) {
                         NetworkInterfaceId: netId,
                         SessionNumber: sessionNumber
                       });
-                      ec2.createTrafficMirrorSession(_params, function(_err, _data) {
+                      ec2.createTrafficMirrorSession(_params, function (_err, _data) {
                         if (_err) {
                           console.log(JSON.stringify(_err, null, 2));
                           reject();
@@ -153,6 +156,51 @@ function calculateSessionNumber(arr, source) {
   else return null;
 }
 
-function random(mn, mx) {
-  return Math.floor(Math.random() * (mx - mn) + mn);
+async function generateMirrorFilter() {
+
+  var mirrFilterParams = {
+    Description: 'Automirror Rule'
+  };
+
+  return await ec2.describeTrafficMirrorFilters().promise()
+    .then(data => {
+      return new Promise(async (resolve, reject) => {
+        var callback = (err, data) => {
+          if (err) {
+            console.log(JSON.stringify(err, null, 2));
+            reject(err);
+          }
+        };
+
+        if (data.TrafficMirrorFilters.length == 0) {
+          await ec2.createTrafficMirrorFilter(mirrFilterParams).promise()
+            .then(trafficMirrorFilterData =>
+              ec2.createTrafficMirrorFilterRule({
+                DestinationCidrBlock: '0.0.0.0/0',
+                RuleAction: 'accept',
+                RuleNumber: 100,
+                SourceCidrBlock: '0.0.0.0/0',
+                TrafficDirection: 'ingress',
+                TrafficMirrorFilterId: trafficMirrorFilterData.TrafficMirrorFilter.TrafficMirrorFilterId
+              }, callback).promise()
+                .then(
+                  ec2.createTrafficMirrorFilterRule({
+                    DestinationCidrBlock: '0.0.0.0/0',
+                    RuleAction: 'accept',
+                    RuleNumber: 100,
+                    SourceCidrBlock: '0.0.0.0/0',
+                    TrafficDirection: 'egress',
+                    TrafficMirrorFilterId: trafficMirrorFilterData.TrafficMirrorFilter.TrafficMirrorFilterId
+                  }, callback).promise()
+                    .then(() => {
+                      data.TrafficMirrorFilters.push({ TrafficMirrorFilterId: trafficMirrorFilterData.TrafficMirrorFilter.TrafficMirrorFilterId });
+                      resolve(data);
+                    })
+                )
+            )
+        }
+        else resolve(data)
+      }
+      )
+    })
 }

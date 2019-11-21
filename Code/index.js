@@ -159,7 +159,14 @@ function calculateSessionNumber(arr, source) {
 async function generateMirrorFilter() {
 
   var mirrFilterParams = {
-    Description: 'Automirror Rule'
+    Description: 'Created by AutoMirror',
+    TagSpecifications: [{
+      ResourceType: "traffic-mirror-filter",
+      Tags: [{
+        Key: 'Name',
+        Value: 'AutoMirror-AllTraffic'
+      }]
+    }]
   };
 
   return await ec2.describeTrafficMirrorFilters().promise()

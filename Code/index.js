@@ -51,9 +51,22 @@ exports.handler = async function (event) {
                 usedSessionInfo = []
               }
 
-              if (mirrTargetData.TrafficMirrorTargets && mirrTargetData.TrafficMirrorTargets.length > 0)
-                masterMirrTarget = mirrTargetData
-                  .TrafficMirrorTargets[mirrTargetData.TrafficMirrorTargets.length - 1].TrafficMirrorTargetId;
+              var targetCountMap = [];
+
+              var count = 0;
+
+              mirrTargetData.TrafficMirrorTargets.forEach(x => { targetCountMap[count++] = { TrafficMirrorTargetId: x.TrafficMirrorTargetId, count: 0 } });
+
+              usedSessionInfo.forEach(x => {
+                var index = targetCountMap.findIndex(y => y.TrafficMirrorTargetId == x.TrafficMirrorTargetId);
+                targetCountMap[index].count++;
+              });
+
+              if (mirrTargetData.TrafficMirrorTargets && mirrTargetData.TrafficMirrorTargets.length > 0) {
+                masterMirrTarget = targetCountMap.reduce(function (prev, current) {
+                  return (prev.count < current.count) ? prev : current
+                }).TrafficMirrorTargetId;
+              }
 
               if (mirrFilterData.TrafficMirrorFilters && mirrFilterData.TrafficMirrorFilters.length > 0)
                 masterMirrFilter = mirrFilterData
@@ -63,6 +76,16 @@ exports.handler = async function (event) {
                 .Reservations.forEach(res =>
                   res.Instances.forEach(inst => {
                     var target = masterMirrTarget;
+
+                    console.log('\n------------\n', targetCountMap, '\n------------\n');
+
+
+                    if (mirrTargetData.TrafficMirrorTargets && mirrTargetData.TrafficMirrorTargets.length > 0) {
+                      masterMirrTarget = targetCountMap.reduce(function (prev, current) {
+                        return (prev.count < current.count) ? prev : current
+                      }).TrafficMirrorTargetId;
+                    }
+
                     var filter = masterMirrFilter;
 
                     if (inst.Tags.map(x => x.Key.toLowerCase()).includes('mirror-target')) {
@@ -83,7 +106,11 @@ exports.handler = async function (event) {
                         x.TrafficMirrorTargetId == target &&
                         x.TrafficMirrorFilterId == filter &&
                         x.NetworkInterfaceId == inst.NetworkInterfaces[0].NetworkInterfaceId
-                      )) {
+                      ) &&
+                      !(usedSessionInfo.find(x => x.NetworkInterfaceId == inst.NetworkInterfaces[0].NetworkInterfaceId) && !inst.Tags.map(x => x.Key.toLowerCase()).includes('mirror-target'))
+                    ) {
+                      var index = targetCountMap.findIndex(y => y.TrafficMirrorTargetId == masterMirrTarget);
+                      targetCountMap[index].count++;
                       mirrTargets.push(target);
                       mirrFilters.push(filter);
                       instIds.push(inst.InstanceId);
@@ -92,6 +119,7 @@ exports.handler = async function (event) {
                   })
                 );
               netIds.forEach((netId, index) => {
+
                 if (mirrFilters[index] != null && mirrTargets[index] != null)
                   tasks.push(new Promise(
                     function (resolve, reject) {
@@ -112,6 +140,7 @@ exports.handler = async function (event) {
                           }]
                         }]
                       }
+
                       usedSessionInfo.push({
                         TrafficMirrorFilterId: mirrFilters[index],
                         TrafficMirrorTargetId: mirrTargets[index],

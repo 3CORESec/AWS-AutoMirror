@@ -4,7 +4,7 @@
 
 Part of the [AWS Mirror Toolkit](https://github.com/3CORESec/aws-mirror-toolkit), AutoMirror is a project that automatically creates AWS traffic mirror sessions. It allows configuration via AWS Tags and helps you manage big deployments of traffic mirror sessions. 
 
-[![image](https://img.shields.io/badge/AutoMirror-0.3-GREEN)](#)
+[![image](https://img.shields.io/badge/AutoMirror-0.4-GREEN)](#)
 [![image](https://img.shields.io/badge/BuiltOn-AWS-orange)](#)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
@@ -41,15 +41,23 @@ After the installation steps are completed, just tag any instance with **Mirror=
 
 **Warning:** Traffic Mirror Sessions are only availabe in Nitro-based instances, so any creation of EC2 instances that are not powered by Nitro will not trigger AutoMirror. Check [this article](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances) for a list of supported instance types.
 
-## Assumptions
+## Requirements
 
-We assume the user already created a Session Mirror Target and a Mirror Filter. On accounts with only one of each, AutoMirror will do everything for you. In environments with several Mirror Targets and Mirror Filters, please read the **Controlling AutoMirror** section. 
+### Mirror Filter
 
-It is also important to mention that the Lambda function needs enough time to create all the sessions before it times out. We recommended changing the default timeout from 3 seconds to 30, as that will accomodate most deployments. In scenarios where you might be creating 30+ sessions at once, please adjust the timeout accordindly.
+If a **Mirror Filter** does not exist, AutoMirror will create a filter that mirrors all of the traffic. If a Mirror Filter exists, AutoMirror will use the existing filter. 
+
+You can also tag which filter you'd like to use. Read the **Controlling AutoMirror** section for more information.
+
+### Mirror Target
+
+We assume the user already created at least 1 **Mirror Target**, as AutoMirror will not do that for you. 
+
+In environemnts with more than 1 **Mirror Target**, AutoMirror will create sessions evenly amongsts the existing targets, giving users a load-balancing feature.
 
 ## Controlling AutoMirror
 
-If you want to configure which **Mirror Target** and **Mirror Filter** AutoMirror should use, we made two tags available:
+If you want to have more control over how AutoMirror creates its sections, we make two options available via tags.
 
 - Mirror-Target
 - Mirror-Filter
@@ -59,9 +67,10 @@ If you want to configure which **Mirror Target** and **Mirror Filter** AutoMirro
 - Mirror-Target=tmt-0cf51cb49550a6000
 - Mirror-Filter=tmf-037045da20bff1511
 
-Through the usage of these tags you can have a more advanced control of AutoMirror. Check this [image](./Imgs/advanced-tags.png) for an example of the tags in use.
+Check this [image](./Imgs/advanced-tags.png) for an example of the tags in use.
 
 # Feedback
+
 Found this interesting? Have a question/comment/request? Let us know! 
 
 Feel free to open an [issue](https://github.com/3CORESec/aws-automirror/issues) or ping us on [Twitter](https://twitter.com/3CORESec).

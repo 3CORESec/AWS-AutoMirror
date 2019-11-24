@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added LoadBalancing features - [Closes #3](https://github.com/3CORESec/AWS-AutoMirror/issues/3)
 - Added automatic Mirror Filter creation - [Closes #7](https://github.com/3CORESec/AWS-AutoMirror/issues/7)
 ### Changed
-- IAM Policy changed to accomodate the new feature.
+- IAM Policy changed to accomodate the new feature (mirror filter creation)
 
 ## [0.3] - 2019-11-14
 ### Added

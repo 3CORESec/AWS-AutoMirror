@@ -53,7 +53,7 @@ You can also tag which filter you'd like to use. Read the **Controlling AutoMirr
 
 We assume the user already created at least 1 **Mirror Target**, as AutoMirror will not do that for you. 
 
-In environemnts with more than 1 **Mirror Target**, AutoMirror will create sessions evenly amongsts the existing targets, giving users a load-balancing feature.
+In environments with more than 1 **Mirror Target**, AutoMirror will create sessions evenly amongsts the existing targets, giving users a load-balancing feature.
 
 You can also tag which target you'd like to use. Read the **Controlling AutoMirror** section for more information.
 

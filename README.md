@@ -33,7 +33,7 @@ We've kept the configuration required to use AutoMirror as simple as possible. T
   - Configure a **30 second** timeout
   - Configure Concurrency to **1**
 - Create a Cloudwatch Event Rule to trigger the Lambda function, using the following [event code](./Cloudwatch/AutoMirrorCloudwatch.json) and [image](./Imgs/cloudwatch-rule.png) for instructions
-  - If you'd like for AutoMirror to run on schedule, change the Even Source [accordingly](./Imgs/cloudwatch-cron.png) 
+  - If you'd like for AutoMirror to run on schedule, change the Event Source [accordingly](./Imgs/cloudwatch-cron.png) 
 
 ## How do I run it?
 

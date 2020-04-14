@@ -4,9 +4,10 @@ Resources:
   Function:
     Type: AWS::Serverless::Function
     Properties:
+      Description: 3CS AutoMirror from Serverless App Repository
       CodeUri: ./Code
       Handler: index.handler
-      Runtime: nodejs10
+      Runtime: nodejs10.x
       FunctionName: AutoMirror
       Timeout: 30
       ReservedConcurrentExecutions: 1

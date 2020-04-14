@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:*"
+            ],
+            "Resource": "arn:aws:logs:*:*:*"
+        },
+        {
+            "Sid": "AutoMirrorExecutionPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeInstances",
+                "ec2:DescribeTrafficMirrorFilters",
+                "ec2:DescribeTrafficMirrorTargets",
+                "ec2:CreateTags",
+                "ec2:CreateTrafficMirrorSession",
+                "ec2:DescribeTrafficMirrorSessions",
+                "ec2:createTrafficMirrorFilterRule",
+                "ec2:createTrafficMirrorFilter"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

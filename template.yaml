@@ -8,6 +8,8 @@ Resources:
       Handler: index.handler
       Runtime: nodejs10
       FunctionName: AutoMirror
+      Timeout: 30
+      ReservedConcurrentExecutions: 1
       Events:
         AutoMirrorCloudwatch:
           Type: CloudWatchEvent

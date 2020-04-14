@@ -6,7 +6,7 @@ Resources:
     Properties:
       CodeUri: ./Code
       Handler: index.handler
-      Runtime: nodejs8.10
+      Runtime: nodejs10
       FunctionName: AutoMirror
       Events:
         AutoMirrorCloudwatch:

@@ -13,14 +13,15 @@ Resources:
       Events:
         AutoMirrorCloudwatch:
           Type: CloudWatchEvent
-          Event:
-            Source:
-              - 'aws.ec2'
-            Detail-type:
-              - 'EC2 Instance State-change Notification'
-            Detail:
-              State:
-                - pending
+          Properties:
+            Pattern:
+              source:
+                - 'aws.ec2'
+              detail-type:
+                - 'EC2 Instance State-change Notification'
+              detail:
+                State:
+                  - pending
       Policies:
         - Statement:
           - Sid: AutoMirrorExecutionPolicy

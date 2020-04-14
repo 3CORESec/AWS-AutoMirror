@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./code
+      Handler: index.handler
+      Runtime: nodejs8.10
+      FunctionName: AutoMirror
+      Events:
+        AutoMirrorCloudwatch:
+          Type: CloudWatchEvent
+          Event:
+            Source:
+              - 'aws.ec2'
+            Detail-type:
+              - 'EC2 Instance State-change Notification'
+            Detail:
+              State:
+                - pending
+      Policies:
+        - Statement:
+          - Sid: AutoMirrorExecutionPolicy
+            Effect: Allow
+            Action:
+            - ec2:DescribeInstances
+            - ec2:DescribeTrafficMirrorFilters
+            - ec2:DescribeTrafficMirrorTargets
+            - ec2:CreateTags
+            - ec2:CreateTrafficMirrorSession
+            - ec2:DescribeTrafficMirrorSessions
+            - ec2:createTrafficMirrorFilterRule
+            - ec2:createTrafficMirrorFilter
+            Resource: '*'
+          - Effect: Allow
+            Action:
+            - logs:*
+            Resource: "arn:aws:logs:*:*:*"

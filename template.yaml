@@ -58,7 +58,6 @@ Resources:
           Type: CloudWatchEvent
           Properties:
             Pattern:
-              description: 3CS AutoMirror from Serverless App Repository
               source:
                 - 'aws.ec2'
               detail-type:

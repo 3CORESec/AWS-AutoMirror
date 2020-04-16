@@ -5,11 +5,11 @@ Resources:
     Type: 'AWS::IAM::ManagedPolicy'
     Properties:
       Description: 3CS AutoMirror from Serverless App Repository
+      Path: /
       ManagedPolicyName: 3CSAutoMirror
       PolicyDocument: 
         Version: '2012-10-17'
         Statement:
-          - Sid: AutoMirrorExecutionPolicy
           - Effect: Allow
             Action:
             - ec2:DescribeInstances

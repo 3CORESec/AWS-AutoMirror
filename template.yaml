@@ -53,15 +53,29 @@ Resources:
       FunctionName: AutoMirror
       Timeout: 30
       ReservedConcurrentExecutions: 1
-      Events:
-        AutoMirrorCloudwatch:
-          Type: CloudWatchEvent
-          Properties:
-            Pattern:
-              source:
-                - 'aws.ec2'
-              detail-type:
-                - 'EC2 Instance State-change Notification'
-              detail:
-                State:
-                  - pending
+  EventRule: 
+    Type: AWS::Events::Rule
+    Properties: 
+      Description: 3CS AutoMirror from Serverless App Repository
+      EventPattern: 
+        source: 
+          - "aws.ec2"
+        detail-type: 
+          - "EC2 Instance State-change Notification"
+        detail: 
+          state: 
+            - "pending"
+      State: "ENABLED"
+      Targets: 
+        - Arn: !GetAtt Function.Arn
+          Id: "3CSAutoMirror"
+  PermissionForEventsToInvokeLambda: 
+    Type: AWS::Lambda::Permission
+    Properties: 
+      FunctionName: AutoMirror
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: 
+        Fn::GetAtt: 
+          - "EventRule"
+          - "Arn"

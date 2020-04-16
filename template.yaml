@@ -1,9 +1,50 @@
 AWSTemplateFormatVersion : '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
+  Policy: 
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: 3CS AutoMirror from Serverless App Repository
+      ManagedPolicyName: 3CSAutoMirror
+      PolicyDocument: 
+        - Statement:
+          - Sid: AutoMirrorExecutionPolicy
+            Effect: Allow
+            Action:
+            - ec2:DescribeInstances
+            - ec2:DescribeTrafficMirrorFilters
+            - ec2:DescribeTrafficMirrorTargets
+            - ec2:CreateTags
+            - ec2:CreateTrafficMirrorSession
+            - ec2:DescribeTrafficMirrorSessions
+            - ec2:createTrafficMirrorFilterRule
+            - ec2:createTrafficMirrorFilter
+            Resource: '*'
+          - Effect: Allow
+            Action:
+            - logs:*
+            Resource: "arn:aws:logs:*:*:*"
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: 3CS Automirror from Serverless App Repository
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+              - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns: 
+        - !Ref Policy
+      RoleName: 3CSAutoMirror
   Function:
     Type: AWS::Serverless::Function
-    Properties:
+    Properties: 
+      Role: !GetAtt Role.Arn
       Description: 3CS AutoMirror from Serverless App Repository
       CodeUri: ./Code
       Handler: index.handler
@@ -23,21 +64,3 @@ Resources:
               detail:
                 State:
                   - pending
-      Policies:
-        - Statement:
-          - Sid: AutoMirrorExecutionPolicy
-            Effect: Allow
-            Action:
-            - ec2:DescribeInstances
-            - ec2:DescribeTrafficMirrorFilters
-            - ec2:DescribeTrafficMirrorTargets
-            - ec2:CreateTags
-            - ec2:CreateTrafficMirrorSession
-            - ec2:DescribeTrafficMirrorSessions
-            - ec2:createTrafficMirrorFilterRule
-            - ec2:createTrafficMirrorFilter
-            Resource: '*'
-          - Effect: Allow
-            Action:
-            - logs:*
-            Resource: "arn:aws:logs:*:*:*"

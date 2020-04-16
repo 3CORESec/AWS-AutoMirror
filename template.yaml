@@ -7,10 +7,10 @@ Resources:
       Description: 3CS AutoMirror from Serverless App Repository
       ManagedPolicyName: 3CSAutoMirror
       PolicyDocument: 
-        - Version: '2012-10-17'
-        - Statement:
+        Version: '2012-10-17'
+        Statement:
           - Sid: AutoMirrorExecutionPolicy
-            Effect: Allow
+          - Effect: Allow
             Action:
             - ec2:DescribeInstances
             - ec2:DescribeTrafficMirrorFilters

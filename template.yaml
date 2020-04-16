@@ -56,6 +56,7 @@ Resources:
   EventRule: 
     Type: AWS::Events::Rule
     Properties: 
+      Name: 3CSAutoMirror
       Description: 3CS AutoMirror from Serverless App Repository
       EventPattern: 
         source: 

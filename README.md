@@ -60,7 +60,7 @@ Check this [image](./Imgs/advanced-tags.png) for an example of the tags in use.
 
 ## Application Security
 
-AutoMirror is open-source and its code is available [./Code/index.js](here). You can verify for yourself what the application will do. 
+AutoMirror is open-source and its code is available [here](./Code/index.js). You can verify for yourself what the application will do. 
 
 ## Deployment Security
 

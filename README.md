@@ -14,7 +14,7 @@ Part of the [AWS Mirror Toolkit](https://github.com/3CORESec/aws-mirror-toolkit)
 
 ## How do I install it?
 
-As of **1.0.0**, 3CS AutoMirror is officially available in the **AWS Serverless Application Repository 🎉
+As of **1.0.0**, 3CS AutoMirror is officially available in the **AWS Serverless Application Repository** 🎉
 
 In the region where you'd like to deploy AutoMirror, visit the **Serverless Application Repository** *(in AWS Console, just search for it in the Services section)* and head over to **Available Applications**. 
 

@@ -18,7 +18,7 @@ As of **1.0.0**, 3CS AutoMirror is officially available in the **AWS Serverless 
 
 In the region where you'd like to deploy AutoMirror, visit the **Serverless Application Repository** *(in AWS Console, just search for it in the Services section)* and head over to **Available Applications**. 
 
-Search for **AutoMirror** *(make sure to enable "show apps that create custom IAM roles or resources policies)* and click on deploy.
+Search for **AutoMirror** *(make sure to enable "show apps that create custom IAM roles or resources policies")* and click on deploy.
 
 ## How do I run it?
 

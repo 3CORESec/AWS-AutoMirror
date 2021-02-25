@@ -24,7 +24,7 @@ Search for **AutoMirror** *(make sure to enable "show apps that create custom IA
 
 After deployment of the app is complete, just tag any instance with **Mirror=True** to trigger AutoMirror in creating the mirror sessions.
 
-**Warning:** Traffic Mirror Sessions are only available in Nitro-based instances, so AutoMirror will only create mirror sessions for supported EC2 instance types. Check [this article](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances) for a list of Nitro-based instances.
+**Warning:** Traffic Mirror Sessions is available for the following AWS EC2 [instance types](https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-considerations.html) and while **AutoMirror** will always attempt to create the session, it will fail if not done for a supported instance type. 
 
 ## Requirements
 

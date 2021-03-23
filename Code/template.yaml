@@ -47,7 +47,7 @@ Resources:
     Properties: 
       Role: !GetAtt Role.Arn
       Description: 3CS AutoMirror from Serverless App Repository
-      CodeUri: s3://3cs-serverless-apps/automirror.zip
+      CodeUri: s3://3cs-serverless-apps/automirror/automirror.zip
       Handler: index.handler
       Runtime: nodejs10.x
       FunctionName: 3CS-AutoMirror

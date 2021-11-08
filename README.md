@@ -24,6 +24,8 @@ Search for **AutoMirror** *(make sure to enable "show apps that create custom IA
 
 After deployment of the app is complete, just tag any instance with **Mirror=True** to trigger AutoMirror in creating the mirror sessions.
 
+To make AutoMirror more easy to manage at scale, the Traffic Mirror Sessions name will be the same as the EC2 instance ID for which the session was created.
+
 **Warning:** Traffic Mirror Sessions is available for the following AWS EC2 [instance types](https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-considerations.html) and while **AutoMirror** will always attempt to create the session, it will fail if not done for a supported instance type. 
 
 ## Requirements
@@ -38,7 +40,7 @@ You can also tag which filter you'd like to use. Read the **Controlling AutoMirr
 
 We assume the user already created at least 1 **Mirror Target**, as AutoMirror will not do that for you. 
 
-In environments with more than 1 **Mirror Target**, AutoMirror will create sessions evenly amongst the existing targets, giving users a load-balancing feature.
+In environments with more than 1 **Mirror Target**, AutoMirror will create sessions evenly amongst the existing targets, giving users a [load-balancing feature](https://blog.3coresec.com/2019/11/automirror-v04-aka-load-balancing.html).
 
 You can also tag which target you'd like to use. Read the **Controlling AutoMirror** section for more information.
 

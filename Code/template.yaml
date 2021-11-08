@@ -49,7 +49,7 @@ Resources:
       Description: 3CS AutoMirror from Serverless App Repository
       CodeUri: s3://3cs-serverless-apps/automirror/automirror.zip
       Handler: index.handler
-      Runtime: nodejs10.x
+      Runtime: nodejs14.x
       FunctionName: 3CS-AutoMirror
       Timeout: 30
       ReservedConcurrentExecutions: 1

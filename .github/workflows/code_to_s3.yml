@@ -1,0 +1,48 @@
+env:
+  AWS_IAM_ROLE: arn:aws:iam::756157594214:role/3CS-CICD-GH-AWS-AutoMirror
+  AWS_DEFAULT_REGION: eu-central-1
+  S3_BUCKET: 3cs-serverless-apps
+  S3_PATH: automirror
+  ZIP_FILE_NAME: automirror.zip
+
+name: Lambda Code Upload to S3
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'test-wfl'
+        required: false
+        default: 'test-wfl'
+  push:
+    branches:
+      - master
+      # - dev
+
+jobs:
+  s3_upload:
+    name: Create Zip & Upload to S3
+    runs-on: ubuntu-latest # windows-latest || macos-latest
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # OR "2" -> To retrieve the preceding commit.
+            
+      - name: Create Zip File
+        run: |
+          mkdir -p output
+          zip -r -j output/$ZIP_FILE_NAME Code/index.js
+
+      - name: Assume 3CS Account Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_IAM_ROLE }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+      - name: Upload Zip to S3
+        run: |
+          aws s3 cp ./output/$ZIP_FILE_NAME s3://${{ env.S3_BUCKET }}/${{ env.S3_PATH }}/$ZIP_FILE_NAME

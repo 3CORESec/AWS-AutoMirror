@@ -8,6 +8,12 @@ Part of the [AWS Mirror Toolkit](https://github.com/3CORESec/aws-mirror-toolkit)
 [![image](https://img.shields.io/badge/BuiltOn-AWS-orange)](#)
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
+# 3CORESec CICD Status
+
+## Master Branch
+
+* [![Lambda Code Upload to S3](https://github.com/3CORESec/AWS-AutoMirror/actions/workflows/code_upload_to_s3.yml/badge.svg)](https://github.com/3CORESec/AWS-AutoMirror/actions/workflows/code_upload_to_s3.yml)
+
 ## How does it work?
 
 3CS AWS AutoMirror is an AWS Lambda function that will monitor the state of your EC2 instances. When instances are created *(or rebooted)* this information will be passed over to AutoMirror, which will check if the particular instance holds a specific tag *(Mirror=True)*. If it does, and if the instance is of the supported type, AutoMirror will create a mirror session.  

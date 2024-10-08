@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2024-10-08
+### Added
+- AutoMirror Lambda has now been shifted to Nodejs 20.x and Javascript SDK v3.
+- Gateway loadbalancer support also added 
+
 ## [1.0.0] - 2020-04-17
 ### Added
 - AutoMirror is now part of the AWS Serverless Application Repository(https://aws.amazon.com/serverless)

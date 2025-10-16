@@ -1,13 +1,13 @@
 AWSTemplateFormatVersion : '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
-  Policy: 
+  Policy:
     Type: 'AWS::IAM::ManagedPolicy'
     Properties:
       Description: 3CS AutoMirror from Serverless App Repository
       Path: /
       ManagedPolicyName: 3CS-AutoMirror
-      PolicyDocument: 
+      PolicyDocument:
         Version: '2012-10-17'
         Statement:
           - Effect: Allow
@@ -39,12 +39,12 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Path: /
-      ManagedPolicyArns: 
+      ManagedPolicyArns:
         - !Ref Policy
       RoleName: 3CS-AutoMirror
   Function:
     Type: AWS::Serverless::Function
-    Properties: 
+    Properties:
       Role: !GetAtt Role.Arn
       Description: 3CS AutoMirror from Serverless App Repository
       CodeUri: s3://3cs-serverless-apps/automirror/automirror.zip
@@ -53,30 +53,64 @@ Resources:
       FunctionName: 3CS-AutoMirror
       Timeout: 30
       ReservedConcurrentExecutions: 1
-  EventRule: 
+  EventRule:
     Type: AWS::Events::Rule
-    Properties: 
+    Properties:
       Name: 3CS-AutoMirror-Trigger
       Description: 3CS AutoMirror from Serverless App Repository
-      EventPattern: 
-        source: 
+      EventPattern:
+        source:
           - "aws.ec2"
-        detail-type: 
+        detail-type:
           - "EC2 Instance State-change Notification"
-        detail: 
-          state: 
+        detail:
+          state:
             - "pending"
       State: "ENABLED"
-      Targets: 
+      Targets:
         - Arn: !GetAtt Function.Arn
           Id: "3CS-AutoMirror"
-  PermissionForEventsToInvokeLambda: 
+  CreateTagsEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: 3CS-AutoMirror-CreateTags-Trigger
+      Description: 3CS AutoMirror CreateTags trigger from Serverless App Repository
+      EventPattern:
+        source:
+          - "aws.ec2"
+        detail-type:
+          - "AWS API Call via CloudTrail"
+        detail:
+          eventSource:
+            - "ec2.amazonaws.com"
+          eventName:
+            - "CreateTags"
+          requestParameters:
+            tagSet:
+              items:
+                key:
+                  - "Mirror"
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt Function.Arn
+          Id: "3CS-AutoMirror-CreateTags"
+  PermissionForEventsToInvokeLambda:
     Type: AWS::Lambda::Permission
-    Properties: 
+    Properties:
       FunctionName: 3CS-AutoMirror
       Action: "lambda:InvokeFunction"
       Principal: "events.amazonaws.com"
-      SourceArn: 
-        Fn::GetAtt: 
+      SourceArn:
+        Fn::GetAtt:
           - "EventRule"
+          - "Arn"
+  PermissionForCreateTagsEventsToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: 3CS-AutoMirror
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn:
+        Fn::GetAtt:
+          - "CreateTagsEventRule"
           - "Arn"
